@@ -4,6 +4,7 @@ const WeatherApp = () => {
   const [city, setCity] = useState('');
   const [weatherData, setWeatherData] = useState(null);
   const [loading, setLoading] = useState(false);
+  const [error, setError] = useState('');
 
   const API_KEY = '449c7df39a044ab6b94115142233010';
 
@@ -18,8 +19,9 @@ const WeatherApp = () => {
       }
       const data = await response.json();
       setWeatherData(data);
+      setError('');
     } catch (error) {
-      alert('Failed to fetch weather data');
+      setError('Failed to fetch weather data');
       console.error(error);
     } finally {
       setLoading(false);
@@ -39,6 +41,7 @@ const WeatherApp = () => {
         <button onClick={handleSearch}>Search</button>
       </div>
       {loading && <p>Loading data...</p>}
+      {error && <p>{error}</p>}
       {weatherData && (
         <div className="weather-card">
           <p>Temperature: {weatherData.current.temp_c}°C</p>
